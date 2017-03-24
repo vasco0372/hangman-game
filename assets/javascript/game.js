@@ -7,6 +7,10 @@ var yourGuesses=[];
 var userGuess="";
 var userWord="";
 //print initial variables//
+var words=["first", "second", "third", "fourth", "fifth"];
+
+var randomNumber=0;
+var computerChoice="";
 
 var displayResults=function(){
 	document.getElementById("wins").innerHTML="Wins: "+ numWins;
@@ -15,12 +19,16 @@ var displayResults=function(){
 	document.getElementById("guessesRemaining").innerHTML="Guesses Remaining: "+ guessesLeft;
 	document.getElementById("yourGuesses").innerHTML="Letters Already Guessed: "+ yourGuesses;
 }
+//function to reset values
+	function reset(){
+		yourGuesses=[];
+		guessesLeft=9;
+		displayResults();
+		computerGuess();
+		displayBlanks();
+	}
 
-var words=["first", "second", "third", "fourth", "fifth"];
-
-var randomNumber=0;
-var computerChoice="";
-	//generate a computer guessed letter//
+//generate a computer guessed letter//
 computerGuess=function(){
 	randomNumber=Math.floor(Math.random()*5);
 	computerChoice=words[randomNumber];
@@ -28,17 +36,17 @@ computerGuess=function(){
 	return(computerChoice);
  	}
 computerGuess();
- 	   // console.log(computerChoice);
- 	//display computer choice with "_"
+
+//display computer choice with "_"
 var wordLength=computerChoice.length;
- 		// var wordDisplay=Array(wordLength+1).join("_ ");
- function displayBlanks(){
+ // var wordDisplay=Array(wordLength+1).join("_ ");
+function displayBlanks(){
  	wordDisplay=[];
  		for (var i=0; i<wordLength; i++){
  			wordDisplay.push("_");
  		}
 //update display//
- 	displayResults();
+displayResults();
  	}
 
  //display blank word//	
@@ -62,20 +70,13 @@ document.onkeydown=function(event){
 	//convert the userword from array to a string and remove ","//
 	var tempWord=wordDisplay.join();
 	userWord=tempWord.replace(/\,/g,"");
-	console.log("updated display "+ wordDisplay);
+	// console.log("updated display "+ wordDisplay);
 	
 	// update gueses left//
 	guessesLeft--;
 	displayResults();
 			
-	function reset(){
-		yourGuesses=[];
-		guessesLeft=9;
-		displayResults();
-		computerGuess();
-		displayBlanks();
-	}
-	
+
 	if(userWord===computerChoice){
 		console.log("You Win! Guessing new word!");
 		numWins++;
@@ -84,15 +85,13 @@ document.onkeydown=function(event){
 		}
 
 
-		// else{
+	else{
 		// 	// alert("Guess again");
-		// 	if(guessesLeft<1){
-		// 		alert("You lost.  Restarting game");
-		// 		numLosses++;
-		// 		guessesLeft=9;
-		// 		yourGuesses=[];
-		// 		printResults();
-		// 		computerGuess();
-		// 	}
-		// }
+		if(guessesLeft<1){
+			console.log("You lost.  Restarting game");
+			numLosses++;
+			console.log(guessesLeft)
+			reset()
+		}
 	}
+}
