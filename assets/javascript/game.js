@@ -13,19 +13,12 @@ var randomNumber=0;
 var computerChoice="";
 
 var displayResults=function(){
+	console.log(wordDisplay);
 	document.getElementById("wins").innerHTML="Wins: "+ numWins;
 	document.getElementById("losses").innerHTML="Losses: "+ numLosses;
 	document.getElementById("currentWord").innerHTML="Current Word: "+ wordDisplay;
 	document.getElementById("guessesRemaining").innerHTML="Guesses Remaining: "+ guessesLeft;
 	document.getElementById("yourGuesses").innerHTML="Letters Already Guessed: "+ yourGuesses;
-}
-//function to reset values
-function reset(){
-	yourGuesses=[];
-	guessesLeft=9;
-	computerGuess();
-	displayBlanks();
-	displayResults();
 }
 
 //generate a computer guessed letter//
@@ -45,12 +38,20 @@ function displayBlanks(){
  	}
  	return (wordDisplay);
 }
+
+//function to reset values
+function reset(){
+	yourGuesses=[];
+	guessesLeft=9;
+	computerGuess();
+	displayBlanks();
+	displayResults();
+}
  	
 //display initial variables//
 computerGuess();
 displayBlanks();
 displayResults();
-
 
 //get user input letter//
 document.onkeydown=function(event){
@@ -72,10 +73,9 @@ document.onkeydown=function(event){
 	guessesLeft--;
 	displayResults();		
 
-	if(userWord===computerChoice){
-		console.log(wordDisplay);
+	if(userWord==computerChoice){
 		displayResults();
-		alert("You Win! Guessing new word!");
+		alert("You Win! The correct word is "+ wordDisplay +". Guessing new word!");
 		numWins++;
 		reset();
 	}
@@ -83,7 +83,7 @@ document.onkeydown=function(event){
 	if(guessesLeft<1){
 		numLosses++;
 		displayResults();
-		alert("You lost.  Restarting game");
+		alert("You lost.  The correct word is '"+ computerChoice +"'. Guessing new word.");
 		reset();
-	}	
+	}
 }
