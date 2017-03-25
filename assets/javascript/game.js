@@ -75,6 +75,7 @@ document.onkeydown=function(event){
 
 	if(userWord==computerChoice){
 		displayResults();
+
 		alert("You Win! The correct word is "+ wordDisplay +". Guessing new word!");
 		numWins++;
 		reset();

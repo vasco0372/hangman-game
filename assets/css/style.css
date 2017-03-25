@@ -1,0 +1,20 @@
+.table{
+	margin-top: 60px;
+	padding:20px;
+	border: 2px solid brown;
+	font-family:cursive;
+}
+th, td,thead{
+	border:solid 1px black;
+}
+.pageFooter{
+	height:80px;
+	background-color: #666666;
+	color:white;
+	text-align: center;
+	border-top:10px solid #4aaaa5;
+	padding-top:20px;
+}
+.content {
+	background-image: url("../images/cheap_diagonal_fabric.png");
+}
