@@ -6,6 +6,7 @@ var guessesLeft=9;
 var yourGuesses=[];
 var userGuess="";
 var userWord="";
+var message="";
 //print initial variables//
 var words=["first", "second", "third", "fourth", "fifth"];
 
@@ -19,6 +20,7 @@ var displayResults=function(){
 	document.getElementById("currentWord").innerHTML="Current Word: "+ wordDisplay;
 	document.getElementById("guessesRemaining").innerHTML="Guesses Remaining: "+ guessesLeft;
 	document.getElementById("yourGuesses").innerHTML="Letters Already Guessed: "+ yourGuesses;
+	document.getElementById("banner").innerHTML=message +"! Press a letter to play again";
 }
 
 //generate a computer guessed letter//
@@ -75,9 +77,9 @@ document.onkeydown=function(event){
 
 	if(userWord==computerChoice){
 		displayResults();
-
 		alert("You Win! The correct word is "+ wordDisplay +". Guessing new word!");
 		numWins++;
+		message="You Win";
 		reset();
 	}
 
@@ -85,6 +87,8 @@ document.onkeydown=function(event){
 		numLosses++;
 		displayResults();
 		alert("You lost.  The correct word is '"+ computerChoice +"'. Guessing new word.");
+		message="You Lost";
 		reset();
 	}
+
 }

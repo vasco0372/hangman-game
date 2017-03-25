@@ -1,11 +1,14 @@
 .table{
-	margin-top: 60px;
+	margin-top: 30px;
 	padding:20px;
 	border: 2px solid brown;
 	font-family:cursive;
 }
-th, td,thead{
+th,td,thead{
 	border:solid 1px black;
+}
+h1{
+	text-align: center;
 }
 .pageFooter{
 	height:80px;
