@@ -19,8 +19,24 @@ h1{
 	padding-top:20px;
 }
 .content {
-	background-image: url("../images/cheap_diagonal_fabric.png");
+	background-image: url("../images/matrixBackground.jpg");
 }
 #banner{
 	text-align: left;
+}
+#neoflight{
+	width:200px;
+	height:150px;
+}
+#trinityImage{
+	width:200px;
+}
+#heading1{
+	font-weight: bold;
+	font-size: 32px
+	color:green;
+}
+#heading2s{
+	font-weight: bold;
+	color:green;
 }
