@@ -34,7 +34,7 @@ var displayResults=function(){
 	document.getElementById("currentWord").innerHTML="Current Word: "+ wordDisplay;
 	document.getElementById("guessesRemaining").innerHTML="Guesses Remaining: "+ guessesLeft;
 	document.getElementById("yourGuesses").innerHTML="Letters Already Guessed: "+ yourGuesses;
-	document.getElementById("banner").innerHTML= "Message:" + message;
+	document.getElementById("banner").innerHTML= "Message: " + message;
 	return;
 }
 
@@ -70,6 +70,7 @@ function reset(){
 //Main program.  Here is the main program//
 // function mainProgram(){
 	//display initial values for game//
+	message="Press a letter to play!"
 	computerGuess();
 	displayWord();
 	displayResults();
@@ -91,6 +92,7 @@ function reset(){
 				wordDisplay[char]=userGuess;
 				matchLetter=true;
 				correctLetter.play();
+				message="Good Guess!"
 			}
 		}
 		var position = computerChoice.indexOf(userGuess);
@@ -98,6 +100,7 @@ function reset(){
 
 		if(position<0){
 			wrongLetter.play();
+			message="Bad Guess!"
 		}
 
 		// check if the letter is pressed already; if not reduce guesses remaining and update display
