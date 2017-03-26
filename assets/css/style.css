@@ -21,3 +21,6 @@ h1{
 .content {
 	background-image: url("../images/cheap_diagonal_fabric.png");
 }
+#banner{
+	text-align: left;
+}
