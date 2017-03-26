@@ -68,7 +68,6 @@ function reset(){
 }
 
 //Main program.  Here is the main program//
-// function mainProgram(){
 	//display initial values for game//
 	message="Press a letter to play!"
 	computerGuess();
@@ -91,12 +90,9 @@ function reset(){
 			//add letters guessed by user in the right location//
 				wordDisplay[char]=userGuess;
 				matchLetter=true;
-				correctLetter.play();
-				message="Good Guess!"
 			}
 		}
 		var position = computerChoice.indexOf(userGuess);
-		console.log(position)
 
 		if(position<0){
 			wrongLetter.play();
@@ -104,15 +100,22 @@ function reset(){
 		}
 
 		// check if the letter is pressed already; if not reduce guesses remaining and update display
-		var alreadyPressed=false;
-		var myArray = yourGuesses;
-		var mySet = new Set(myArray);
+		var mySet = new Set(yourGuesses);
 		var alreadyPressed = mySet.has(userGuess); // true
 		if (!alreadyPressed){
 			yourGuesses.push(userGuess);
 			guessesLeft--;
-			displayResults();	
-		};
+			correctLetter.play();
+			message="Good Guess!"
+			displayResults();
+		}
+		else{
+			console.log(alreadyPressed)
+			message="Key already pressed!";
+			console.log(message);
+			displayResults();
+			wrongLetter.play();
+			}	
 
 		//convert the userword from array to a string and remove ","//
 		var tempWord=wordDisplay.join();
