@@ -18,7 +18,7 @@ var freeYourMind = new Audio('assets/sounds/freeYourMind.mp3');
 var winGame = new Audio('assets/sounds/winGame.mp3');
 var loseGame = new Audio('assets/sounds/loseGame.mp3');
 var correctLetter = new Audio('assets/sounds/correctLetter.mp3');
-var wrongLetter= new Audio('assets/sounds/wrongLetter.wav');
+var wrongLetter= new Audio('assets/sounds/wrongLetter.mp3');
 
 //Give the Audio element a stop function
 HTMLAudioElement.prototype.stop = function()
