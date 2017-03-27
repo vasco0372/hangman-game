@@ -18,7 +18,7 @@ var freeYourMind = new Audio('assets/sounds/freeYourMind.mp3');
 var winGame = new Audio('assets/sounds/winGame.mp3');
 var loseGame = new Audio('assets/sounds/loseGame.mp3');
 var correctLetter = new Audio('assets/sounds/correctLetter.mp3');
-var wrongLetter= new Audio('assets/sounds/wrongLetter.mp3');
+var wrongLetter= new Audio('assets/sounds/wrongLetter.wav');
 
 //Give the Audio element a stop function
 HTMLAudioElement.prototype.stop = function()
@@ -26,7 +26,15 @@ HTMLAudioElement.prototype.stop = function()
     this.pause();
     this.currentTime = 0.0;
 }
-
+function blinker(){
+    if(document.getElementById("banner"))
+    {
+        var d = document.getElementById("banner") ;
+        d.style.color= (d.style.color=='red'?'white':'red');
+        setTimeout('blinker()', 500);
+    }
+}
+blinker();
 var displayResults=function(){
 	// console.log(wordDisplay);
 	document.getElementById("wins").innerHTML="Wins: "+ numWins;
@@ -63,86 +71,104 @@ function reset(){
 	computerGuess();
 	displayWord();
 	message="";
+	alreadyPressed=false;
 	// displayResults();
 	return;
 }
 
 //Main program.  Here is the main program//
-	//display initial values for game//
-	message="Press a letter to play!"
-	computerGuess();
-	displayWord();
-	displayResults();
-
-	//get user input letter//
-	document.onkeydown=function(event){
-
-		userGuess=event.key;
+//display initial values for game//
+message="Press a letter to play!"
+computerGuess();
+displayWord();
+displayResults();
+//get user input letter//
+document.onkeydown=function(event){
+	userGuess=event.key;
 		//stop all other sounds//
-		winGame.stop();
-		loseGame.stop();
-		correctLetter.stop();
-		wrongLetter.stop();
-		freeYourMind.play();		
-		//check if the letter is in word//
-		for (char in computerChoice){
-			if (computerChoice[char] == userGuess){
-			//add letters guessed by user in the right location//
+	winGame.stop();
+	loseGame.stop();
+	correctLetter.stop();
+	wrongLetter.stop();
+	freeYourMind.play();
+	// check if already pressed
+	var mySet = new Set(yourGuesses);
+	var alreadyPressed = mySet.has(userGuess);
+
+	//check if the letter is in computerChoice//
+	// for (char in computerChoice){
+		var letterInCC =computerChoice.indexOf(userGuess);
+		console.log(letterInCC);
+		if (computerChoice.indexOf(userGuess) >-1){
+			for (char in computerChoice){
+				if (computerChoice[char] == userGuess){
+				//add letters guessed by user in the right location//
 				wordDisplay[char]=userGuess;
-				matchLetter=true;
+				}
 			}
-		}
-		var position = computerChoice.indexOf(userGuess);
+			// if the letter is pressed already;
+			console.log(matchLetter);
 
-		if(position<0){
-			wrongLetter.play();
-			message="Bad Guess!"
-		}
-
-		// check if the letter is pressed already; if not reduce guesses remaining and update display
-		var mySet = new Set(yourGuesses);
-		var alreadyPressed = mySet.has(userGuess); // true
-		if (!alreadyPressed){
-			yourGuesses.push(userGuess);
-			guessesLeft--;
-			correctLetter.play();
-			message="Good Guess!"
-			displayResults();
-		}
-		else{
-			console.log(alreadyPressed)
-			message="Key already pressed!";
-			console.log(message);
-			displayResults();
-			wrongLetter.play();
+			if (!alreadyPressed){
+				//if not already pressed add letters guessed by user in the right location//
+				// wordDisplay[letterInCC]=userGuess;
+				//convert the userword from array to a string and remove ","//
+				var tempWord=wordDisplay.join();
+				userWord=tempWord.replace(/\,/g,"");
+				//add key to userGuesses//
+				yourGuesses.push(userGuess);
+				correctLetter.play();
+				message="Good Guess!"
+				guessesLeft--;
+				displayResults();
+			}
+			else{
+				//if the letter is already pressed//
+				console.log(alreadyPressed)
+				message="Key already pressed!";
+				console.log(message);
+				displayResults();
+				wrongLetter.play();
 			}	
-
-		//convert the userword from array to a string and remove ","//
-		var tempWord=wordDisplay.join();
-		userWord=tempWord.replace(/\,/g,"");
-
-		//when all letters are guessed display message and updated results//
-		if(userWord==computerChoice){
-			// alert("You Win! The correct word is "+ wordDisplay +". Guessing new word!");
-		 	numWins++;
-		 	message="You Win! Press a letter to play again";
-		 	displayResults();
-			freeYourMind.stop();
-			winGame.play();
-		 	reset();
-		 	// mainProgram();
-
 		}
-		// 15 guesses are exceeded //
-		if(guessesLeft<1){
-			numLosses++;
-			// alert("You lost.  The correct word is '"+ computerChoice +"'. Guessing new word.");
-			message="You Lost! Press a letter to play again";
-			displayResults();
-			freeYourMind.stop();
-			loseGame.play();
-			reset();
-			// mainProgram();
-		}
+		// letter is not in computerChoice//
+		else{
+			if (!alreadyPressed){
+				wrongLetter.play();
+				message="Bad Guess!"
+				//add key to userGuesses//
+				yourGuesses.push(userGuess);
+				displayResults();
+				guessesLeft--
+			}
+			//if already pressed//
+			else{
+				message="Key already pressed!";	
+				displayResults();
+				wrongLetter.play();
+			}
+		// }
 	}
+	//when all letters are guessed display message and updated results//
+	if(userWord==computerChoice){
+		// alert("You Win! The correct word is "+ wordDisplay +". Guessing new word!");
+		numWins++;
+		message="You Win! Press a letter to play again";
+		displayResults();
+		freeYourMind.stop();
+		winGame.play();
+		reset();
+
+	}
+	// 15 guesses are exceeded //
+	if(guessesLeft<1){
+		numLosses++;
+		// alert("You lost.  The correct word is '"+ computerChoice +"'. Guessing new word.");
+		message="You Lost! Press a letter to play again";
+		displayResults();
+		freeYourMind.stop();
+		loseGame.play();
+		reset();
+	}
+}
 // }
